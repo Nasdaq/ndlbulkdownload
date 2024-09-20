@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = 'ndlbulkdownload'
+version = '0.1.0'
+#dynamic = ["version"]
+requires-python = ">= 3.8"
+dependencies = [
+  "requests",
+  "tdqm",
+]
+description = "Data Link CLI Bulk Download Utility"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+]
+
+[project.scripts]
+bulkdownload = "ndlbulkdownload:cli.main"
+
+[tool.hatch.metadata]
+allow-direct-references = true
