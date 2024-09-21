@@ -157,8 +157,11 @@ def create_session(args):
         session.proxies.update(proxies)
     session.mount("https://", adapter)
     session.mount("http://", adapter)
-    session.verify = args.skip_ssl_verify
-    session.trust_env = args.skip_ssl_verify
+
+    if args.skip_ssl_verify is not None:
+        requests.packages.urllib3.disable_warnings()
+        session.verify = args.skip_ssl_verify
+        session.trust_env = args.skip_ssl_verify
 
     return session
 

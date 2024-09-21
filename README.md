@@ -8,8 +8,6 @@ Env Var | Description | Required
 -- | -- | --
 NDL_APIKEY | Data Link api key.  Used for all requests to perform bulk download. | Yes
 NDL_HOSTNAME | Alternative hostname to retrieve files. | No
-NDL_SKIP_PROXY | Do not attach proxy env vars: HTTP_PROXY, HTTPS_PROXY, NO_RPXOY (default: False) | No
-NDL_SKIP_SSL_VERIFY | Disable ssl verification. (default False) | No
 
 ## Install
 

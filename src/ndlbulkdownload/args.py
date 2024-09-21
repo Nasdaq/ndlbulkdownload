@@ -16,23 +16,6 @@ min(32, os.cpu_count()))
 """
 
 
-class ParseEnvBool(argparse.Action):
-    def __init__(self, env_var, required=False, default=False, **kwargs):
-        value = (os.getenv(env_var, default) is True)
-
-        if required and value:
-            required = False
-
-        super(ParseEnvBool, self).__init__(
-            default=value,
-            nargs=0,
-            required=required,
-            **kwargs)
-
-    def __call__(self, parser, namespace, values, option_string=None):
-        setattr(namespace, self.dest, values)
-
-
 def parse_params(items):
     d = {}
     if not items:
@@ -75,13 +58,13 @@ def arg_parser():
                         help='Show logging output')
 
     parser.add_argument('--skip-proxy',
-                        action=ParseEnvBool,
-                        env_var='NDL_SKIP_PROXY',
+                        action='store_true',
+                        default=None,
                         help='Ignore proxy environment variables')
 
     parser.add_argument('--skip-ssl-verify',
-                        action=ParseEnvBool,
-                        env_var='NDL_SKIP_SSL_VERIFY',
+                        action='store_false',
+                        default=None,
                         help='Do not verify SSL (not recommended in most '
                              'situations)')
 
