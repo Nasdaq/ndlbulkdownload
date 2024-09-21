@@ -86,7 +86,7 @@ def write_with_progress(url, session, headers={}, chunk_size=4096):
             unit_scale=True,
             unit_divisor=1024,
         ) as bar:
-            for data in tqdm(response.iter_content(chunk_size=chunk_size)):
+            for data in response.iter_content(chunk_size=chunk_size):
                 size = handle.write(data)
                 bar.update(size)
 
