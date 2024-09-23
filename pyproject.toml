@@ -20,7 +20,7 @@ classifiers = [
 ]
 
 [project.scripts]
-bulkdownload = "ndlbulkdownload:cli.main"
+bulkdownload = "ndlbulkdownload.cli:main"
 
 [tool.hatch.metadata]
 allow-direct-references = true
