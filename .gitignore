@@ -2,6 +2,7 @@ __pycache__/
 venv/
 build/
 dist/
+_version.py
 
 .Python
 *.pyc
