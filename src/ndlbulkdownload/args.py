@@ -69,6 +69,11 @@ def arg_parser():
                         help='Do not verify SSL (not recommended in most '
                              'situations)')
 
+    parser.add_argument('--redirect',
+                        action=argparse.BooleanOptionalAction,
+                        default=True,
+                        help='Request redirect to files (default: true)')
+
     parser.add_argument('--workers',
                         metavar='W',
                         type=int,

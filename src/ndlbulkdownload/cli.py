@@ -73,9 +73,9 @@ def dest_file_from_url(url):
     return file
 
 
-def write_with_progress(url, session, headers={}, chunk_size=4096):
+def write_with_progress(url, session, headers={}, params={}, chunk_size=4096):
     file = dest_file_from_url(url)
-    response = session.get(url, headers=headers, stream=True)
+    response = session.get(url, headers=headers, stream=True, params=params)
     total = int(response.headers.get('content-length', 0))
     with open(file, "wb") as handle:
         with tqdm(
@@ -215,9 +215,14 @@ def main():
     urls = urls_from_files(files)
     logging.info(urls)
 
+    params = {}
+    if args.redirect:
+        params['qopts.redirect'] = 'true'
+
     thread_map(partial(write_with_progress,
                        session=session,
-                       headers=headers),
+                       headers=headers,
+                       params=params),
                urls,
                max_workers=max_workers)
 

@@ -31,22 +31,25 @@ bulkdownload --help
 
 usage: bulkdownload [-h] --code VC/TC [--param key value] [--debug]
                     [--verbose] [--skip-proxy] [--skip-ssl-verify]
-                    [--workers W] [--host hostname]
+                    [--redirect | --no-redirect] [--workers W]
+                    [--host hostname] [--version]
 
 Bulk Download from Data Link.
 
 options:
-  -h, --help         show this help message and exit
-  --code VC/TC       The vendor_code/table_code you are trying to download.
-                     Example: FOO/BAR
-  --param key value  Add query param key/value pair
-  --debug            Increase log level to DEBUG
-  --verbose          Show logging output
-  --skip-proxy       Ignore proxy environment variables
-  --skip-ssl-verify  Do not verify SSL (not recommended in most situations)
-  --workers W        Total parallel workers (default: min(32, os.cpu_count()))
-  --host hostname    Define an alternative hostname
-  --version          show program's version number and exit
+  -h, --help            show this help message and exit
+  --code VC/TC          The vendor_code/table_code you are trying to download.
+                        Example: FOO/BAR
+  --param key value     Add query param key/value pair
+  --debug               Increase log level to DEBUG
+  --verbose             Show logging output
+  --skip-proxy          Ignore proxy environment variables
+  --skip-ssl-verify     Do not verify SSL (not recommended in most situations)
+  --redirect, --no-redirect
+                        Request redirect to files (default: true)
+  --workers W           Total parallel workers (default: min(32, os.cpu_count()))
+  --host hostname       Define an alternative hostname
+  --version             show program's version number and exit
 ```
 
 ## Examples
