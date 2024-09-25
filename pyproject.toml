@@ -5,6 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "ndlbulkdownload"
 readme = "README.md"
+license = {text = "MIT"}
 dynamic = ["version"]
 requires-python = ">= 3.8"
 dependencies = [
