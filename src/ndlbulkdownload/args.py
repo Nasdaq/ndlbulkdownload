@@ -1,5 +1,6 @@
 import argparse
 import os
+from .version import version
 
 """
 tdqm.contrib.concurrent:
@@ -78,4 +79,8 @@ def arg_parser():
                         metavar='hostname',
                         default=None,
                         help='Define an alternative hostname')
+
+    parser.add_argument('--version',
+                        action='version',
+                        version=f'{version}')
     return parser

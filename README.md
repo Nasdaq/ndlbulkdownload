@@ -46,6 +46,7 @@ options:
   --skip-ssl-verify  Do not verify SSL (not recommended in most situations)
   --workers W        Total parallel workers (default: min(32, os.cpu_count()))
   --host hostname    Define an alternative hostname
+  --version          show program's version number and exit
 ```
 
 ## Examples

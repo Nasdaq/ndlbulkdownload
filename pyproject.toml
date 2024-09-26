@@ -7,7 +7,7 @@ name = "ndlbulkdownload"
 readme = "README.md"
 license = {text = "MIT"}
 dynamic = ["version"]
-requires-python = ">= 3.8"
+requires-python = ">= 3.9"
 dependencies = [
   "requests",
   "tdqm",
@@ -15,7 +15,6 @@ dependencies = [
 description = "Data Link CLI Bulk Download Utility"
 classifiers = [
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3 :: Only",
