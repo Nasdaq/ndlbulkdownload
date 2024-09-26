@@ -141,7 +141,7 @@ def urls_from_files(files):
 def setup_logging(args):
     level = logging.INFO
     if args.verbose:
-        logging.basicConfig()
+        logging.basicConfig(format='%(levelname)-8s %(name)-20s %(message)s')
 
         if args.debug:
             http.client.HTTPConnection.debuglevel = 5
