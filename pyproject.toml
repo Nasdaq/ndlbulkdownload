@@ -10,7 +10,7 @@ dynamic = ["version"]
 requires-python = ">= 3.9"
 dependencies = [
   "requests",
-  "tdqm",
+  "tqdm",
 ]
 maintainers = [
   { name="Nasdaq Data Link Development Team", email="connect@data.nasdaq.com" },
