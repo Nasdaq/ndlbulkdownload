@@ -1,3 +1,6 @@
+# The default target of this Makefile is:
+all:: build
+
 build: clean
 	python -m build
 	python -m twine check dist/*
