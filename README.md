@@ -15,7 +15,7 @@ NDL_HOSTNAME | Alternative hostname to retrieve files. | No
 like and activate.
 
 ```shell
-pip install .
+pip install ndlbulkdownload
 ```
 
 ## Usage
