@@ -12,8 +12,23 @@ dependencies = [
   "requests",
   "tdqm",
 ]
+maintainers = [
+  { name="Nasdaq Data Link Development Team", email="connect@data.nasdaq.com" },
+]
 description = "Data Link CLI Bulk Download Utility"
+keywords = [
+  'nasdaq data link',
+  'nasdaq',
+  'datalink',
+  'console',
+  'terminal',
+  'cli',
+  'data',
+  'financial',
+  'economic',
+]
 classifiers = [
+  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
@@ -24,6 +39,10 @@ classifiers = [
 
 [project.scripts]
 bulkdownload = "ndlbulkdownload.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/nasdaq/ndlbulkdownload"
+Issues = "https://github.com/nasdaq/ndlbulkdownload/issues"
 
 [tool.hatch.metadata]
 allow-direct-references = true
