@@ -41,6 +41,8 @@ retry_strategy = Retry(
 adapter = HTTPAdapter(max_retries=retry_strategy)
 proxies = urllib.request.getproxies()
 
+failed_urls = []
+
 
 def api_key():
     return os.getenv(apikey_envname)
@@ -73,7 +75,8 @@ def dest_file_from_url(url):
     return file
 
 
-def write_with_progress(url, session, headers={}, params={}, chunk_size=4096):
+def write_with_progress_uncaught(url, session, headers={}, params={},
+                                 chunk_size=4096):
     file = dest_file_from_url(url)
     response = session.get(url, headers=headers, stream=True, params=params)
     total = int(response.headers.get('content-length', 0))
@@ -89,6 +92,19 @@ def write_with_progress(url, session, headers={}, params={}, chunk_size=4096):
             for data in response.iter_content(chunk_size=chunk_size):
                 size = handle.write(data)
                 bar.update(size)
+
+
+def write_with_progress(url, session, headers={}, params={}, chunk_size=4096):
+    try:
+        write_with_progress_uncaught(url, session, headers=headers,
+                                     params=params, chunk_size=chunk_size)
+    except Exception as e:
+        logging.debug(e)
+        msg = "Problem occurred while downloading, " \
+            f"will retry later: {url}"
+        logging.info(msg)
+        global failed_urls
+        failed_urls.append(url)
 
 
 def halt_processing_if_necessary(status, result):
@@ -188,6 +204,23 @@ Invalid CODE format. Expected vendor_code/table_code got:
         parser.exit(1)
 
 
+def retry_failed_if_necessary(session, headers, params, max_workers):
+    global failed_urls
+
+    while len(failed_urls) > 0:
+        retry_urls = failed_urls.copy()
+        failed_urls = []
+        logging.info("Retrying failed files...")
+        logging.debug(retry_urls)
+
+        thread_map(partial(write_with_progress,
+                           session=session,
+                           headers=headers,
+                           params=params),
+                   retry_urls,
+                   max_workers=max_workers)
+
+
 def main():
     parser = arg_parser()
     args = parser.parse_args()
@@ -225,6 +258,11 @@ def main():
                        params=params),
                urls,
                max_workers=max_workers)
+
+    sys.stderr.flush()
+    logging.info("\n\n")
+
+    retry_failed_if_necessary(session, headers, params, max_workers)
 
     sys.stderr.flush()
     logging.info("\n\ndone!")
