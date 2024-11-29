@@ -213,7 +213,7 @@ def main():
     session = create_session(args)
     files = get_files(session, url, headers, params)
     urls = urls_from_files(files)
-    logging.info(urls)
+    logging.debug(urls)
 
     params = {}
     if args.redirect:
