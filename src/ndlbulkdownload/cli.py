@@ -36,7 +36,7 @@ retry_strategy = Retry(
     total=3,
     backoff_factor=3,
     status_forcelist=[202, 429, 500, 502, 503, 504],
-    allowed_methods=["HEAD", "GET", "OPTIONS"]
+    allowed_methods=["HEAD", "GET", "POST", "OPTIONS"]
 )
 adapter = HTTPAdapter(max_retries=retry_strategy)
 proxies = urllib.request.getproxies()
@@ -131,7 +131,7 @@ def get_files(session, url, headers, params):
         logging.info('Waiting for files to be ready...')
         time.sleep(2)
 
-        response = session.get(url, headers=headers, params=params)
+        response = session.post(url, headers=headers, data=params)
         response.raise_for_status()
 
         result = response.json()
