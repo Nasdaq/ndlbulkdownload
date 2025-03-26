@@ -60,6 +60,13 @@ Add query param key/value pair
         help=help_param,
     )
 
+    help_output_dir = """
+Directory to output files. Example: /tmp/ndl (default: current directory)
+"""
+    parser.add_argument(
+        "--output_dir", metavar="O", type=str, default=os.getcwd(), help=help_output_dir
+    )
+
     help_debug = """
 Increase log level to DEBUG
 """

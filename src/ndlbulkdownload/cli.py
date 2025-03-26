@@ -42,6 +42,18 @@ adapter = HTTPAdapter(max_retries=retry_strategy)
 proxies = urllib.request.getproxies()
 
 failed_urls = []
+OUTPUT_DIR = None
+
+
+def check_and_set_output_dir(args):
+    global OUTPUT_DIR
+    if not os.path.exists(args.output_dir):
+        os.makedirs(args.output_dir)
+        logging.info(f"Created directory: {args.output_dir}")
+    else:
+        logging.info(f"Directory exists: {args.output_dir}")
+
+    OUTPUT_DIR = args.output_dir
 
 
 def api_key():
@@ -70,7 +82,7 @@ def bulk_download_url(args):
 
 def dest_file_from_url(url):
     scheme, netloc, path, query, fragment = urlparse.urlsplit(url)
-    file = os.path.basename(path)
+    file = os.path.join(OUTPUT_DIR, os.path.basename(path))
     logging.debug(f"writing to: {file}")
     return file
 
@@ -251,6 +263,8 @@ def main():
     params = {}
     if args.redirect:
         params["qopts.redirect"] = "true"
+
+    check_and_set_output_dir(args)
 
     thread_map(
         partial(write_with_progress, session=session, headers=headers, params=params),

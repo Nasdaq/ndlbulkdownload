@@ -29,6 +29,7 @@ brackets [] for lists of a given key.  See examples below.
 ```shell
 usage: bulkdownload [-h] --code VC/TC
                     [--param [key value [value ...]]]
+                    [--output_dir /tmp/ndl]
                     [--debug]
                     [--verbose]
                     [--skip-proxy] [--skip-ssl-verify]
@@ -41,9 +42,12 @@ Bulk Download from Data Link.
 
 options:
   -h, --help            show this help message and exit
-  --code VC/TC          The vendor_code/table_code you are trying to download. Example: FOO/BAR
+  --code VC/TC          The vendor_code/table_code you are trying to download.
+                        Example: FOO/BAR
   --param key value [value ...]
                         Add query param key/value pair
+  --output_dir O        Directory to output files. Example: /tmp/ndl (default:
+                        current directory).
   --debug               Increase log level to DEBUG
   --verbose             Show logging output
   --skip-proxy          Ignore proxy environment variables
@@ -63,6 +67,9 @@ bulkdownload --code FOO/BAR --param date.eq 2024-09-01
 
 # download multiple tickers between a given date [start, end)
 bulkdownload --code FOO/BAR --param 'symbols.in[]' MSFT AAPL --param date.gte 2024-01-01 --param date.lt 2024-04-01
+
+# download multiple tickers between a given date [start, end) and with output directory
+bulkdownload --code FOO/BAR --param 'symbols.in[]' MSFT --param 'symbols.in[]' AAPL --param date.gte 2024-01-01 --param date.lt 2024-04-01 --output_dir /tmp/ndl
 ```
 
 ## External Documentation
@@ -83,4 +90,3 @@ To try your changes with a localized shim:
 
 ```shell
 make install-dev
-```
