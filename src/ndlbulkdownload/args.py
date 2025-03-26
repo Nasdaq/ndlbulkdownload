@@ -50,6 +50,13 @@ def arg_parser():
                         action='append',
                         help='Add query param key/value pair')
 
+    parser.add_argument('--output_dir',
+                        metavar='O',
+                        type=str,
+                        default=os.getcwd(),
+                        help="Directory to output files. Example: /tmp/ndl (default: current directory)."
+                             " Directory, if do not exists, will be created")
+
     parser.add_argument('--debug',
                         action='store_true',
                         help='Increase log level to DEBUG')
