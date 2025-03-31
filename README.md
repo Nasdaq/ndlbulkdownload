@@ -42,7 +42,7 @@ options:
                         Example: FOO/BAR
   --param key value     Add query param key/value pair
   --output_dir O        Directory to output files. Example: /tmp/ndl (default: current directory)
-                        Directory, if do not exists, will be created 
+                        Directory, if do not exists, will be created
   --debug               Increase log level to DEBUG
   --verbose             Show logging output
   --skip-proxy          Ignore proxy environment variables
