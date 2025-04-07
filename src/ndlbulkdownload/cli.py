@@ -45,15 +45,15 @@ failed_urls = []
 OUTPUT_DIR = None
 
 
-def check_and_set_output_dir(args):
+def check_and_set_output_directory(args):
     global OUTPUT_DIR
-    if not os.path.exists(args.output_dir):
-        os.makedirs(args.output_dir)
-        logging.info(f"Created directory: {args.output_dir}")
+    if not os.path.exists(args.output_directory):
+        os.makedirs(args.output_directory)
+        logging.info(f"Created directory: {args.output_directory}")
     else:
-        logging.info(f"Directory exists: {args.output_dir}")
+        logging.info(f"Directory exists: {args.output_directory}")
 
-    OUTPUT_DIR = args.output_dir
+    OUTPUT_DIR = args.output_directory
 
 
 def api_key():
@@ -264,7 +264,7 @@ def main():
     if args.redirect:
         params["qopts.redirect"] = "true"
 
-    check_and_set_output_dir(args)
+    check_and_set_output_directory(args)
 
     thread_map(
         partial(write_with_progress, session=session, headers=headers, params=params),

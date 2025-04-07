@@ -29,7 +29,7 @@ brackets [] for lists of a given key.  See examples below.
 ```shell
 usage: bulkdownload [-h] --code VC/TC
                     [--param [key value [value ...]]]
-                    [--output_dir /tmp/ndl]
+                    [--output-directory /tmp/ndl]
                     [--debug]
                     [--verbose]
                     [--skip-proxy] [--skip-ssl-verify]
@@ -46,8 +46,8 @@ options:
                         Example: FOO/BAR
   --param key value [value ...]
                         Add query param key/value pair
-  --output_dir O        Directory to output files. Example: /tmp/ndl (default:
-                        current directory).
+  -O O, --output-directory O
+                        Directory to output files. Example: /tmp/ndl (default: current directory)
   --debug               Increase log level to DEBUG
   --verbose             Show logging output
   --skip-proxy          Ignore proxy environment variables
@@ -69,7 +69,7 @@ bulkdownload --code FOO/BAR --param date.eq 2024-09-01
 bulkdownload --code FOO/BAR --param 'symbols.in[]' MSFT AAPL --param date.gte 2024-01-01 --param date.lt 2024-04-01
 
 # download multiple tickers between a given date [start, end) and with output directory
-bulkdownload --code FOO/BAR --param 'symbols.in[]' MSFT --param 'symbols.in[]' AAPL --param date.gte 2024-01-01 --param date.lt 2024-04-01 --output_dir /tmp/ndl
+bulkdownload --code FOO/BAR --param 'symbols.in[]' MSFT --param 'symbols.in[]' AAPL --param date.gte 2024-01-01 --param date.lt 2024-04-01 -O /tmp/ndl
 ```
 
 ## External Documentation
