@@ -49,9 +49,9 @@ def check_and_set_output_directory(args):
     global OUTPUT_DIR
     if not os.path.exists(args.output_directory):
         os.makedirs(args.output_directory)
-        logging.info(f"Created directory: {args.output_directory}")
+        logging.debug(f"Created directory: {args.output_directory}")
     else:
-        logging.info(f"Directory exists: {args.output_directory}")
+        logging.debug(f"Directory exists: {args.output_directory}")
 
     OUTPUT_DIR = args.output_directory
 
