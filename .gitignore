@@ -4,5 +4,7 @@ build/
 dist/
 _version.py
 
+Meta
+
 .Python
 *.pyc
