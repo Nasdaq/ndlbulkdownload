@@ -44,6 +44,16 @@ bulkdownload = "ndlbulkdownload.cli:main"
 Homepage = "https://github.com/nasdaq/ndlbulkdownload"
 Issues = "https://github.com/nasdaq/ndlbulkdownload/issues"
 
+[project.optional-dependencies]
+lint = [
+  "ruff",
+  "pre-commit",
+]
+build = [
+  "twine",
+  "build",
+]
+
 [tool.hatch.metadata]
 allow-direct-references = true
 

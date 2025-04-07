@@ -6,13 +6,21 @@ build: clean
 	python -m twine check dist/*
 .PHONY: build
 
-install-build:
-	python -m pip install -r .meta/requirements-build.txt
-.PHONY: install-build
-
 install:
 	python -m pip install .
 .PHONY: install
+
+install-build:
+	python -m pip install -e '.[build]'
+.PHONY: install-build
+
+install-devtools:
+	python -m pip install -e '.[lint]'
+	pre-commit install
+.PHONY: install-devtools
+
+install-maintainer: install-build install-devtools
+.PHONY: install-maintainer
 
 install-dev:
 	python -m pip install -e .

@@ -61,3 +61,18 @@ bulkdownload --code FOO/BAR --param date.eq 2024-09-01
 # download multiple tickers between a given date [start, end)
 bulkdownload --code FOO/BAR --param 'symbols.in[]' MSFT --param 'symbols.in[]' AAPL --param date.gte 2024-01-01 --param date.lt 2024-04-01
 ```
+
+## Development
+
+Be sure to install optional dependencies. You can run the following to install
+development related tools:
+
+```shell
+make install-devtools
+```
+
+To try your changes with a localized shim:
+
+```shell
+make install-dev
+```
