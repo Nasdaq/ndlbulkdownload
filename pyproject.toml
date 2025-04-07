@@ -53,8 +53,8 @@ source = "vcs"
 [tool.hatch.build.hooks.vcs]
 version-file = "src/ndlbulkdownload/_version.py"
 
-[tool.flake8]
-exclude = [".git", "__pycache__", "build", "dist", ".eggs"]
+[tool.ruff.format]
+indent-style = "space"
 
 [tool.hatch.build.targets.sdist]
 include = ["src"]

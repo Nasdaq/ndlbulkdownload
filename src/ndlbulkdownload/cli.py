@@ -17,26 +17,26 @@ from tqdm.contrib.concurrent import thread_map
 from functools import partial
 
 from .args import (
-  parse_params,
-  arg_parser,
+    parse_params,
+    arg_parser,
 )
 
 
-default_hostname = 'data.nasdaq.com'
+default_hostname = "data.nasdaq.com"
 apikey_envname = "NDL_APIKEY"
 
 halt_processing_status = [
-    'CANCELLED',
-    'CLOSED',
-    'COLUMN_FILTER_FAILURE',
-    'FAILED',
+    "CANCELLED",
+    "CLOSED",
+    "COLUMN_FILTER_FAILURE",
+    "FAILED",
 ]
 
 retry_strategy = Retry(
     total=3,
     backoff_factor=3,
     status_forcelist=[202, 429, 500, 502, 503, 504],
-    allowed_methods=["HEAD", "GET", "OPTIONS"]
+    allowed_methods=["HEAD", "GET", "OPTIONS"],
 )
 adapter = HTTPAdapter(max_retries=retry_strategy)
 proxies = urllib.request.getproxies()
@@ -50,7 +50,7 @@ def api_key():
 
 def get_headers():
     headers = {
-        'X-Api-Token': api_key(),
+        "X-Api-Token": api_key(),
     }
 
     return headers
@@ -59,7 +59,7 @@ def get_headers():
 def get_hostname(hostname=None):
     if hostname is not None:
         return hostname
-    return os.getenv('NDL_HOSTNAME', default_hostname)
+    return os.getenv("NDL_HOSTNAME", default_hostname)
 
 
 def bulk_download_url(args):
@@ -75,16 +75,15 @@ def dest_file_from_url(url):
     return file
 
 
-def write_with_progress_uncaught(url, session, headers={}, params={},
-                                 chunk_size=4096):
+def write_with_progress_uncaught(url, session, headers={}, params={}, chunk_size=4096):
     file = dest_file_from_url(url)
     response = session.get(url, headers=headers, stream=True, params=params)
-    total = int(response.headers.get('content-length', 0))
+    total = int(response.headers.get("content-length", 0))
     with open(file, "wb") as handle:
         with tqdm(
             desc=file,
             total=total,
-            unit='B',
+            unit="B",
             miniters=1,
             unit_scale=True,
             unit_divisor=1024,
@@ -96,12 +95,12 @@ def write_with_progress_uncaught(url, session, headers={}, params={},
 
 def write_with_progress(url, session, headers={}, params={}, chunk_size=4096):
     try:
-        write_with_progress_uncaught(url, session, headers=headers,
-                                     params=params, chunk_size=chunk_size)
+        write_with_progress_uncaught(
+            url, session, headers=headers, params=params, chunk_size=chunk_size
+        )
     except Exception as e:
         logging.debug(e)
-        msg = "Problem occurred while downloading, " \
-            f"will retry later: {url}"
+        msg = f"Problem occurred while downloading, will retry later: {url}"
         logging.info(msg)
         global failed_urls
         failed_urls.append(url)
@@ -109,10 +108,10 @@ def write_with_progress(url, session, headers={}, params={}, chunk_size=4096):
 
 def halt_processing_if_necessary(status, result):
     if status in halt_processing_status:
-        errors = result.get('errors')
-        message = f'Something went wrong: {status}'
+        errors = result.get("errors")
+        message = f"Something went wrong: {status}"
         if errors is not None and len(errors) > 0:
-            message += f'; errors: {errors}'
+            message += f"; errors: {errors}"
         logging.warn(message)
         raise ValueError(message)
 
@@ -123,12 +122,12 @@ def get_files(session, url, headers, params):
     result = {}
 
     while True:
-        if status == 'SUCCEEDED' and len(files) >= 0:
+        if status == "SUCCEEDED" and len(files) >= 0:
             break
 
         halt_processing_if_necessary(status, result)
 
-        logging.info('Waiting for files to be ready...')
+        logging.info("Waiting for files to be ready...")
         time.sleep(2)
 
         response = session.get(url, headers=headers, params=params)
@@ -137,9 +136,9 @@ def get_files(session, url, headers, params):
         result = response.json()
         logging.debug(result)
 
-        result = result.get('bulk_download')
-        status = result.get('status')
-        files = result.get('files', None)
+        result = result.get("bulk_download")
+        status = result.get("status")
+        files = result.get("files", None)
 
     return files
 
@@ -147,7 +146,7 @@ def get_files(session, url, headers, params):
 def urls_from_files(files):
     urls = []
     for path in files:
-        s3_url = path.get('url')
+        s3_url = path.get("url")
         urls.append(s3_url)
         logging.debug(s3_url)
 
@@ -157,7 +156,7 @@ def urls_from_files(files):
 def setup_logging(args):
     level = logging.INFO
     if args.verbose:
-        logging.basicConfig(format='%(levelname)-8s %(name)-20s %(message)s')
+        logging.basicConfig(format="%(levelname)-8s %(name)-20s %(message)s")
 
         if args.debug:
             http.client.HTTPConnection.debuglevel = 5
@@ -184,7 +183,7 @@ def create_session(args):
 
 def raise_if_missing_env(env_var):
     if os.getenv(env_var, None) is None:
-        raise ValueError(f'Missing required environment variable [{env_var}]')
+        raise ValueError(f"Missing required environment variable [{env_var}]")
 
 
 def raise_if_missing_required():
@@ -192,7 +191,7 @@ def raise_if_missing_required():
 
 
 def check_code(parser, code):
-    d = code.split('/')
+    d = code.split("/")
     if len(d) != 2:
         message = f"""
 Invalid CODE format. Expected vendor_code/table_code got:
@@ -213,12 +212,13 @@ def retry_failed_if_necessary(session, headers, params, max_workers):
         logging.info("Retrying failed files...")
         logging.debug(retry_urls)
 
-        thread_map(partial(write_with_progress,
-                           session=session,
-                           headers=headers,
-                           params=params),
-                   retry_urls,
-                   max_workers=max_workers)
+        thread_map(
+            partial(
+                write_with_progress, session=session, headers=headers, params=params
+            ),
+            retry_urls,
+            max_workers=max_workers,
+        )
 
 
 def main():
@@ -228,7 +228,7 @@ def main():
     try:
         raise_if_missing_required()
     except ValueError as ve:
-        sys.stderr.write(f'{ve}\n---\n\n')
+        sys.stderr.write(f"{ve}\n---\n\n")
         parser.print_help()
         sys.exit(0)
 
@@ -250,14 +250,13 @@ def main():
 
     params = {}
     if args.redirect:
-        params['qopts.redirect'] = 'true'
+        params["qopts.redirect"] = "true"
 
-    thread_map(partial(write_with_progress,
-                       session=session,
-                       headers=headers,
-                       params=params),
-               urls,
-               max_workers=max_workers)
+    thread_map(
+        partial(write_with_progress, session=session, headers=headers, params=params),
+        urls,
+        max_workers=max_workers,
+    )
 
     sys.stderr.flush()
     logging.info("\n\n")
@@ -268,6 +267,6 @@ def main():
     logging.info("\n\ndone!")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     freeze_support()  # for Windows support
     main()

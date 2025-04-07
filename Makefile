@@ -27,7 +27,7 @@ dist-test: build
 .PHONY: dist-test
 
 lint:
-	flake8
+	ruff check
 .PHONY: lint
 
 clean:
