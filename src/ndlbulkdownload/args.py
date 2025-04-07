@@ -21,12 +21,13 @@ def parse_params(items):
     if not items:
         return None
 
-    for k, v in items:
+    for v in items:
+        k = v.pop(0)
         if k in d:
             if isinstance(d[k], (str, bytes)):
                 d[k] = [d[k], v]
             else:
-                d[k].append(v)
+                d[k].extend(v)
         else:
             d[k] = v
 
@@ -53,8 +54,8 @@ Add query param key/value pair
 """
     parser.add_argument(
         "--param",
-        metavar=("key", "value"),
-        nargs=2,
+        metavar=("key value", "value"),
+        nargs="*",
         action="append",
         help=help_param,
     )

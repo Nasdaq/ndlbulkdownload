@@ -27,20 +27,23 @@ Note, for collections, you can specify multiple of the same key. Use RFC
 brackets [] for lists of a given key.  See examples below.
 
 ```shell
-bulkdownload --help
-
-usage: bulkdownload [-h] --code VC/TC [--param key value] [--debug]
-                    [--verbose] [--skip-proxy] [--skip-ssl-verify]
-                    [--redirect | --no-redirect] [--workers W]
-                    [--host hostname] [--version]
+usage: bulkdownload [-h] --code VC/TC
+                    [--param [key value [value ...]]]
+                    [--debug]
+                    [--verbose]
+                    [--skip-proxy] [--skip-ssl-verify]
+                    [--redirect | --no-redirect]
+                    [--workers W]
+                    [--host hostname]
+                    [--version]
 
 Bulk Download from Data Link.
 
 options:
   -h, --help            show this help message and exit
-  --code VC/TC          The vendor_code/table_code you are trying to download.
-                        Example: FOO/BAR
-  --param key value     Add query param key/value pair
+  --code VC/TC          The vendor_code/table_code you are trying to download. Example: FOO/BAR
+  --param key value [value ...]
+                        Add query param key/value pair
   --debug               Increase log level to DEBUG
   --verbose             Show logging output
   --skip-proxy          Ignore proxy environment variables
@@ -59,7 +62,7 @@ options:
 bulkdownload --code FOO/BAR --param date.eq 2024-09-01
 
 # download multiple tickers between a given date [start, end)
-bulkdownload --code FOO/BAR --param 'symbols.in[]' MSFT --param 'symbols.in[]' AAPL --param date.gte 2024-01-01 --param date.lt 2024-04-01
+bulkdownload --code FOO/BAR --param 'symbols.in[]' MSFT AAPL --param date.gte 2024-01-01 --param date.lt 2024-04-01
 ```
 
 ## Development
