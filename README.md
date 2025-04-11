@@ -61,3 +61,8 @@ bulkdownload --code FOO/BAR --param date.eq 2024-09-01
 # download multiple tickers between a given date [start, end)
 bulkdownload --code FOO/BAR --param 'symbols.in[]' MSFT --param 'symbols.in[]' AAPL --param date.gte 2024-01-01 --param date.lt 2024-04-01
 ```
+
+## External Documentation
+
+Please read more about possible arguments for a given table.  You can read
+more about the [api parameter specification here](https://docs.data.nasdaq.com/docs/large-table-download).
