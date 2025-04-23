@@ -32,6 +32,7 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3 :: Only",
   "Topic :: Terminals",
   "Topic :: Utilities",
@@ -43,6 +44,7 @@ bulkdownload = "ndlbulkdownload.cli:main"
 [project.urls]
 Homepage = "https://github.com/nasdaq/ndlbulkdownload"
 Issues = "https://github.com/nasdaq/ndlbulkdownload/issues"
+Changelog = "https://github.com/nasdaq/ndlbulkdownload/blob/master/CHANGELOG.md"
 
 [project.optional-dependencies]
 lint = [
