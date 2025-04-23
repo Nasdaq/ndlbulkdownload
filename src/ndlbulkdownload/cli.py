@@ -50,8 +50,6 @@ def check_and_set_output_directory(args):
     if not os.path.exists(args.output_directory):
         os.makedirs(args.output_directory)
         logging.debug(f"Created directory: {args.output_directory}")
-    else:
-        logging.debug(f"Directory exists: {args.output_directory}")
 
     OUTPUT_DIR = args.output_directory
 
